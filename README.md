@@ -19,3 +19,4 @@ Going through with all of them can be very useful.
 
 * **Lab 1** - Basic things one can or may need to do to create DL models.
 * **Lab 2** - Creating our own Neural Network (from scratch).
+* **Lab 3** - Making and tuning a Neural Network model on our own dataset.
