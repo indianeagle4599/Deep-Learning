@@ -1,0 +1,137 @@
+\documentclass[conference,compsoc]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+
+\begin{document}
+\title{Deep Learning Lab 2}
+\author{\IEEEauthorblockN{Hitesh Goyal - 19BAI1129,
+\IEEEauthorblockA{
+VIT Chennai, Tamil Nadu, India 600127\\
+Email: hitesh.goyal2019@vitstudent.ac.in}
+}}
+
+\maketitle
+\begin{abstract}
+    Having learnt about the environment in which deep learning is performed, it is important to get a grass-root level understanding about how Deep Learning works. It becomes essential to explore the fields of Neural Networks and Gradient Descent for understanding Deep learning.
+\end{abstract}
+
+\section{Introduction}
+For this lab session, to gain better insight on the working of neural networks and how they \emph{learn}, creation of neural networks, working of vector operations and creation of gradient descent will be explored.
+
+\section{Methodology}
+\subsection{Creating Neural Networks}
+A grass-root level approach for neural networks suggests increasing complexity in small steps. The neural networks used in the current world are very complex if one tries to understand them without having learnt about them from the very basic. Avoiding such issues is important to have a clear understanding.
+
+\subsubsection{Creating a simple Neural Network}
+In essence, all a neural network does is predict. Given an input and a weight, it simply predicts the value. So, the simplest neural network will simply predict:
+\begin{gather*}\label{single}
+    y=wx
+\end{gather*}
+
+\subsubsection{Neural Network with Multiple inputs}
+Going a step further, a slightly more complex neural network will be able to accept multiple weights for a single prediction. This is a simple combination of equation \ref{single} which, with \emph{n} weights, would look like:
+\begin{gather*}\label{multiin}
+    y=w_1x_1+w_2x_2+...+w_nx_n
+\end{gather*}
+
+\subsubsection{Trying some vector operations}
+To be able to increase complexity further, it  is good have an idea about commonly used vector operations which can help make the code modular and easier to understand. The use of vector operations include but are not limited to the following:
+\begin{itemize}
+    \item \textbf{Element-wise Multiplication}: It can be used for multiplying the weights with the inputs more easily.
+    \item \textbf{Element-wise Addition}: It can be used for handling error values  of different input columns in gradient descent on multiple weights.
+    \item \textbf{Vector Sum}: It can be used to find the final sum of the predictions of individual weights.
+    \item \textbf{Vector Average}: It can be used to find the average error of a set of data points for which predictions were made.
+\end{itemize}
+
+\subsubsection{Neural Network Multiple outputs}
+Some applications may find the possibility of having just a single input but multiple outputs may have to be predicted from it. This situation needs a neural network which is capable of making multiple predictions even after taking just a single input. This is a simple combination of equation \ref{single} which, with the need for \emph{n} predictions would look like:
+\begin{gather*}\label{multiout}
+    y_1 = w_1x \\
+    y_2 = w_2x \\
+    ... \\
+    y_n = w_nx 
+\end{gather*}
+
+\subsubsection{Neural Network with Multiple inputs Multiple outputs}
+Many real world applications are focused on this type of neural network. One which requires taking multiple inputs and generating outputs. This application will combine the equations \ref{multiin} and \ref{multiout}. With \emph{n} inputs and \emph{m} predictions, this would look like:
+\begin{gather*}\label{multiinout}
+    y_1 = w_{11}x_1+w_{12}x_2+...+w_{1n}x_n \\
+    y_2 = w_{21}x_1+w_{22}x_2+...+w_{2n}x_n \\
+    ... \\
+    y_m = w_{m1}x_1+w_{m2}x_2+...+w_{mn}x_n 
+\end{gather*}
+
+
+\subsubsection{Multiple Layer Neural Network}
+The real world applications are trained better on these neural networks. These are called deep neural networks. The concept of these is that multiple neural networks are stacked on one another, i.e., the output of one neural network is passed as the input of the next one.  In essenc, it is the stacking of multiple equations of \ref{multiinout}. With \emph{n} inputs and \emph{m} predictions in the input layer and \emph{m} inputs and \emph{o} predictions in the output layer, this would look like:
+\begin{gather*}\label{firstlayermultiinout}
+    h_1 = v_{11}x_1+v_{12}x_2+...+v_{1n}x_n \\
+    h_2 = v_{21}x_1+v_{22}x_2+...+v_{2n}x_n \\
+    ... \\
+    h_m = v_{m1}x_1+v_{m2}x_2+...+v_{mn}x_n 
+\end{gather*}
+\begin{center}\textit{
+    in the input layer, and }
+\end{center}
+\begin{gather*}\label{secondlayermultiinout}
+    y_1 = w_{11}h_1+w_{12}h_2+...+w_{1m}h_m \\
+    y_2 = w_{21}h_1+w_{22}h_2+...+w_{2m}h_m \\
+    ... \\
+    y_o = w_{o1}h_1+w_{o2}h_2+...+w_{om}h_m 
+\end{gather*}
+\begin{center}\textit{
+    in the output layer.}
+\end{center}
+Combining these equations will make them look so complex that it is better to view them as they are.
+
+\subsection{Creating Gradient Descent}
+Just getting predictions from a neural network doesn't help much. It becomes important to identify ways in which the predictions can be made more relevant and useful. Thus, the concept of \emph{learning} comes into picture.
+
+\subsubsection{Comparison for error calculation}
+The predictions made by the neural network hold little value by themselves. But, when they are used to compare with the original values, they seem to gain much more meaning. For comparison, one must simply find the difference between the predicted and actual values. This difference is called the error. It looks like:
+\begin{gather*}
+\label{error}
+    error = predicted-actual
+\end{gather*}
+
+\subsubsection{Comparison and error reduction}
+The aim of calculating the error is to be able to reduce it. Lower error means the model is more relevant and useful for predicting values for the given data. Based on how high or low the neural network predicts, one must try to reduce the error by decreasing or increasing the weights for respective cases. It looks like:
+\begin{gather*}
+\label{reducederror}
+    error = predicted-actual \\
+    weight = weight - error*(scaling\ factor) \\
+    (reduced\ error) = (new\ prediction) - actual
+\end{gather*}
+
+\subsubsection{Comparison, Error reduction and Weight Manipulation for Learning}
+Usually, the weights need to be altered for multiple subsequent tries to minimise the error. There are various ways to do that. Some of them are:
+\begin{itemize}
+    \item \textbf{Hot and cold learning -} In this method, the error is changed by a fixed amount based on whether the value is higher or lower than the actual value. The advantage of this method lies in its simplicity. It allows for very simply reaching a very low error value. The main disadvantage of this method is that the starting weights and the learning rate must be combined in such a way that zero error can be reached. It looks like:
+    \begin{gather*}
+    \label{hotncold}
+        error = predicted-actual \\
+        weight = weight - k*(learning\ rate) \\
+        (reduced\ error) = (new\ prediction) - actual
+    \end{gather*}
+    Here, \emph{k} is decided by how high or low the value is.
+    \item \textbf{Scaled learning -} In this method, the error is calculated and scaled before altering the weight. So, a lower error will provide a shorter stride and a higher error will provide a longer one. Due to the scaling, it becomes relatively slower at smaller errors and faster at larger errors. It can give rise to a different set of problems which can be avoided when the right learning rate is chosen. This looks like:
+    \begin{gather*}
+    \label{scaled}
+        error = predicted-actual \\
+        weight = weight - error*(learning\ rate)*input \\
+        (reduced\ error) = (new\ prediction) - actual
+    \end{gather*}
+    Considering that the learning rate is chosen correctly, one can effectively reduce the error over multiple iterations of the above equation. The input and learning rate are the scaling factors and are as important to the equation as the error itself.
+\end{itemize}
+
+\subsubsection{Applying Gradient Descent on a set of data points}
+The standard approach for applying this method on a set of data points is to change the weight after every data point and iterate over the entire dataset multiple times until the error is minimised significantly. The learning rate chosen has a very important effect on the error. If it is too high, it will increase the error instead of decreasing it. If it is too low, it will not change much and will need a lot of iterations to reach the minimum error.\\
+
+Another approach is to vary the learning rate so that if the error starts to increasing instead of decreasing, it reduces until it is sure to reduce the error and not increase it. Also, it can increase the learning rate when the difference between consecutive errors is lesser than some threshold value which can make sure that the learning rate is effectively helping reduce the error.
+
+\section{Conclusion}
+To conclude, understanding the working of neural networks and their learning method can be very challenging because of its sheer complexity. But, when broken down into small enough bits, one can work their way through the concepts which have actually just been stacked on one another. Even so, the concept of a machine having the capability of learning through a sequential and structured way of using mathematics can show the power of effective and accumulation.
+
+
+
+\end{document}

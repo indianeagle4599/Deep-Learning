@@ -1,5 +1,7 @@
 # Deep Learning Lab 1
 
+*Better to run on Colab*
+
 One of the first and most important thing while learning ML or DL is being familiar with the environment.
 The best way to do so is by learning the different things one needs to do and how they can be done.
 Below, we have a set of tasks. Upon completion, we would be one step closer to being better at Deep Learning.
