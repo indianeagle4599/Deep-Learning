@@ -21,3 +21,4 @@ Going through with all of them can be very useful.
 * **Lab 2** - Creating our own Neural Network (from scratch).
 * **Lab 3** - Making and tuning a Neural Network model on our own dataset.
 * **Lab 4** - Performing multi-class image clasification using Convolutional Neural Networks.
+* **Lab 5** - Apply Transfer Learning on multi-class image clasification.

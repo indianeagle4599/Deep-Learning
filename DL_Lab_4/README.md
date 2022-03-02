@@ -30,4 +30,4 @@ Keras Tuner makes our code easier to manipulate and track. Moreover, we can save
 
 * Even though the code can be run on both platforms, the saving of the models, images, training time, GPU requirement, etc may vary.
 * It is best to utilise a GPU because CNNs do much better with them.
-* To understand more about the theory of CNNs and all the different things in and around it, you can for material online. This notebook only shows hoe CNNs perform image classification and how they can be tuned.
+* To understand more about the theory of CNNs and all the different things in and around it, you can for material online. This notebook only shows how CNNs perform image classification and how they can be tuned.

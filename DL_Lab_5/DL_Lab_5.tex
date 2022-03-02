@@ -1,0 +1,80 @@
+\documentclass[conference,compsoc]{IEEEtran}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+\title{Deep Learning Lab 5}
+\author{\IEEEauthorblockN{Hitesh Goyal - 19BAI1129,
+\IEEEauthorblockA{
+VIT Chennai, Tamil Nadu, India 600127\\
+Email: hitesh.goyal2019@vitstudent.ac.in}
+}}
+
+\maketitle
+\begin{abstract}
+    In the current world, data for many domains is not freely available. Some data which is available requires very complex models to get effective predictions. In such cases, having pre-trained models can make all the difference. Transfer learning, partially, if not completely, solves this problem. Having a model trained on a more vast dataset can be effective when predicting for a smaller and more niche dataset.
+\end{abstract}
+
+\section{Introduction}
+Transfer learning is a special Deep Learning method where the weights learnt from one domain or type of data are used to make predictions on another with or without further training. In essence, knowledge of one dataset is transferred to predict another.
+
+\section{Dataset}
+\subsection{CIFAR10}
+The CIFAR10 dataset is a "tiny-image" dataset which contains a total of sixty thousand 32X32 images. There are a total of ten classes and each class has six thousand images. It is a well-balanced dataset. The classes which are labelled are - Airplane, Automobile, Bird, Cat, Deer, Dog, Frog, Horse, Ship and Truck.
+
+\subsection{Custom Dataset}
+Fine-Grained Visual Classification of Aircraft (FGVC-Aircraft) is a benchmark dataset for the fine grained visual categorization of aircraft. The dataset contains 10,200 images of aircraft, with 100 images for each of 102 different aircraft model variants, most of which are airplanes. The (main) aircraft in each image is annotated with a tight bounding box and a hierarchical airplane model label.
+
+Aircraft models are organized in a four-levels hierarchy. The four levels, from finer to coarser, are:
+
+\begin{itemize}
+    \item Model, e.g. Boeing 737-76J. Since certain models are nearly visually indistinguishable, this level is not used in the evaluation.
+    \item Variant, e.g. Boeing 737-700. A variant collapses all the models that are visually indistinguishable into one class. The dataset comprises 102 different variants.
+    \item Family, e.g. Boeing 737. The dataset comprises 70 different families.
+    \item Manufacturer, e.g. Boeing. The dataset comprises 29 different manufacturers.
+    \item The data is divided into three equally-sized training, validation and test subsets. The first two sets can be used for development, and the latter should be used for final evaluation only.
+\end{itemize}
+
+\section{Methodology}
+\subsection{Base Model Selection}
+The base model chosen for the transfer learning is Xception model. This is the model which performed relatively well in predicting ImageNet's thousand class classification. Choosing such a dataset means just the architecture can also be effective suggesting the pre-trained model should also work well.
+
+\subsection{Transfer Learning on CIFAR10 Dataset}
+\subsubsection{Loading CIFAR10 Dataset}
+The inbuilt library in tensorflow, "tensorflow.keras.datasets.cifar10" can be used to load the CIFAR10 dataset.
+
+\subsubsection{Preprocessing}
+\begin{enumerate}
+    \item The data must be normalised before any further work for which the values can be simply divided by 255.
+    \item The data is then split into training, validation and testing.
+\end{enumerate}
+
+\subsubsection{Model Creation}
+\begin{itemize}
+    \item \textbf{Freezing the first half} - Upon freezing the first half, and training, the accuracy seems to increase rapidly at first and the rise starts to reduce gradually. The model seems to overfit a little but it still reaches a decent accuracy.
+    \item \textbf{Freezing the last half} - Upon freezing the last half, the accuracy increase a little more consistently but reaches a lower validation accuracy than the previous one and higher a higher training accuracy. This means that the model overfits more making it less effective.
+    \item \textbf{Freezing the middle} - Upon freezing half the layers right in the middle of the model, the accuracy increase gradually but it doesn't increase as much as either of the two. Although, the model doesn't overfit either. It may be effective if run for more iterations but it is less useful than the first one. 
+\end{itemize}
+
+\subsection{Transfer learning on custom dataset}
+\subsubsection{Loading FGVC-Aircraft Dataset}
+\begin{enumerate}
+    \item \textbf{Downloading the dataset} - The dataset is first downloaded from the main website.
+    \item \textbf{Loading images} - The dataset contains predefined splits of train, validation and testing and the data is loaded with the same format.
+    \item \textbf{Other preprocessing} - The images are then converted into a numpy array and finally normalised by dividing it by 255. The labels of these images are one-hot encoded for direct use in neural networks.
+\end{enumerate}
+
+\subsubsection{Model Building}
+Upon applying transfer learning where the first half layers of the base model are frozen, the model shows a slow start but it is able to work its way up to a very high training accuracy. Although, the validation accuracy doesn't increase as much in the later iterations. So, the model begins to overfit.
+
+\section{Results}
+To find out how effective transfer learning can be when compared to traditional Deep Learning, a comparison with previous lab's results will be made.
+\subsection{CIFAR10 dataset}
+In a past lab, CIFAR10 dataset was used for training CNNs. In that lab, after hyperparameter tuning, the testing accuracy achieved was almost 75\%. In the  transfer learning models, the highest test accuracy achieved is 82\%. So, transfer learning performs better than traditional deep learning.
+
+\subsection{FGVC-Aircraft dataset}
+In the previous lab, the model was able to reach almost 44\% accuracy on testing and validation while being 90\% accurate on the training dataset. Using transfer learning, the model created is able to predict on the training data with 95.50\% accuracy, validation data with 59.53\% and test data with 59.68\%. This suggests that even without tuning or modifying, a basic transfer learning model can be more effective than a tuned, normal model. It appears that the architecture used by these models and the weights of their initial layers are very effective at extracting image features.
+
+\section{Conclusion}
+Transfer learning is a very powerful technique and can be very useful to save resources and work on sparse data.Transferring "knowledge" in models appears to be a very similar concept to what humans can relate to making it all the more interesting. This approach is special also because it shows a models need not be made from the beginning and if one performs tasks similar to a pre-existing model, using its architecture with Transfer Learning may be a better choice.
+
+\end{document}
